@@ -1,0 +1,17 @@
+{
+  "name": "vr_go_v.0.1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "google-auth-library": "^0.12.0",
+    "googleapis": "^23.0.0",
+    "nodemon": "^1.12.1",
+    "telebot": "^1.2.3"
+  }
+}
