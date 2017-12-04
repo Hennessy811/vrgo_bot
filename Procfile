@@ -1,1 +1,1 @@
-node writer.js
+web: node writer.js
