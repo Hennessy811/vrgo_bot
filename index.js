@@ -6,7 +6,8 @@ function attent() {
     var res = 500;
     //console.log(res);
 }
-attent()
+attent();
+
 bot.on(['/start', '/hello'], (msg) => msg.reply.text('Welcome!'));
 
 bot.on(/^\/spent (\d+)$/, (msg, props) => {
