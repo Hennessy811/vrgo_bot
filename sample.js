@@ -36,7 +36,7 @@ function getData(auth) {
     sheets.spreadsheets.values.get({
         auth: auth,
         spreadsheetId: '1dpG3kWhjxTCoDtJ6kQ5C9ESPpCA_kyYfzWq_u6Xq7u0',
-        range: 'ТБот!A2:B', //Change Sheet1 if your worksheet's name is something else
+        range: 'TBot!A2:B', //Change Sheet1 if your worksheet's name is something else
     }, (err, response) => {
         if (err) {
             console.log('The API returned an error: ' + err);
@@ -58,8 +58,8 @@ function listMajors(auth) {
     var sheets = google.sheets('v4');
     sheets.spreadsheets.values.get({
         auth: auth,
-        spreadsheetId: '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms',
-        range: 'Class Data!A2:E',
+        spreadsheetId: '1dpG3kWhjxTCoDtJ6kQ5C9ESPpCA_kyYfzWq_u6Xq7u0',
+        range: 'TBot!A2:E',
     }, function(err, response) {
         if (err) {
             console.log('The API returned an error: ' + err);
@@ -69,11 +69,10 @@ function listMajors(auth) {
         if (rows.length == 0) {
             console.log('No data found.');
         } else {
-            console.log('Name, Major:');
             for (var i = 0; i < rows.length; i++) {
                 var row = rows[i];
                 // Print columns A and E, which correspond to indices 0 and 4.
-                console.log('%s, %s', row[0], row[4]);
+                console.log('%s', row[0]);
             }
         }
     });
@@ -92,20 +91,61 @@ bot.command('book', (ctx) => {
 });
 
 // Naive authorization middleware
-bot.use((ctx, next) => {
-    if (!ctx.state.role) {
-        ctx.state.role = 'Гость';
-    } else if (true) {
-
-    }
+// bot.use((ctx, next) => {
+// ctx.state.role = 'guest';
+//     return next()
+// });
 
 
-    return next()
+function checkState(req) {
+    console.log(this.ctx.state.role)
+}
+
+// bot.on('text', (ctx) => {
+//     switch (ctx.state.role){
+//         case 'guest':
+//             ctx.reply('Gimme comand, guest!');
+//             break;
+//         case 'booking':
+//             break;
+//         // case 'guest':
+//         //     break;
+//         // case 'guest':
+//         //     break;
+//         // case default:
+//         //     break;
+//     }
+//     // console.log(ctx.state.role);
+//     // checkState();
+//     // return ctx.reply(`Hello ${ctx.state.role}`)
+//     });
+bot.command('start', (ctx) => {
+    ctx.state.role = 'guest';
+    ctx.reply('Hello, my new best friend!')
 });
 
-bot.on('text', (ctx) => {
-    return ctx.reply(`Hello ${ctx.state.role}`)
-    });
+bot.command('ty', (ctx) => {
+    console.log(ctx.state.role);
+
+    if (ctx.state.role == 'guest'){
+        console.log(ctx.state.role);
+
+        ctx.state.role = 'friend';
+        console.log(ctx.state.role);
+
+        return ctx.reply('NP')
+    } else {
+        return false;
+    }
+});
+bot.command('gg', (ctx) => {
+    if (ctx.state.role == 'friend'){
+        ctx.state.role = 'admin';
+        return ctx.reply('WP')
+    } else {
+        return false;
+    }
+});
 
 // bot.hears(/ВС .+/i, (ctx) => {
 //     // Some logic goes here
